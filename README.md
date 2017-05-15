@@ -1,5 +1,5 @@
-# SSM<br>
-spring springmvc mybaits 的注册登录练习<br>
+# SSM
+##spring springmvc mybaits 的注册登录练习<br>
 
 A.注册可进行简单的验证<br>
     1、用户名是否重复<br>
