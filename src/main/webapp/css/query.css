@@ -1,0 +1,15 @@
+@charset "UTF-8"; 
+
+table {
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 0.3em 1em;
+}
+
+#pagecount{
+	position: relative;
+	left: 390px;
+	top: 10px;
+}

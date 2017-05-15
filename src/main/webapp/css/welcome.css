@@ -1,0 +1,51 @@
+@charset "UTF-8";
+
+table {
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 0.3em 1em;
+}
+
+html, body {
+	margin: 130;
+	height: 100%;
+}
+
+body>header {
+	line-height: 80px;
+	text-align: center;
+	background: #999;
+}
+
+body>header>h1 {
+	display: inline;
+	text-align: center;
+}
+
+.section {
+	position: absolute;
+	top: 300px;
+	bottom: 0;
+	widows: 100;
+}
+
+.section>menu {
+	float: left;
+	width: 200px;
+	height: 100%;
+	background: #999;
+}
+
+.section>main {
+	padding-left: 200px;
+	height: 100%;
+}
+
+main>iframe {
+	height: 100%;
+	width: 100%;
+	border: 0;
+	display: none;
+}

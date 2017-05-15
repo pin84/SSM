@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="qp.dao.UserMapper">
+	<resultMap id="BaseResultMap" type="qp.model.User">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="pwd" property="pwd" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="province" property="province" jdbcType="VARCHAR" />
+		<result column="city" property="city" jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- 为分页定义的 resultMap -->
+	<resultMap type="qp.model.User" id="pageResultMap" extends="BaseResultMap">
+		<result column="userCount" property="userCount" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, pwd, email, province, city
+	</sql>
+	
+	
+	<select id="userList" resultMap="pageResultMap">
+		select * , (select count(*) from
+		app )as userCount from app limit
+		#{pageIndex},#{pageSize}
+	</select>
+	<select id="queryUser" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		,(select count(name) from app where name like binary #{name}) as userCount
+		from app where
+		name
+		like
+		binary #{name}limit
+		#{pageIndex},#{pageSize}
+	</select>
+	<!-- 为拦截器定义的sql语句 -->
+	<select id="findByNameAndPwd" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select * from app where binary name=#{name} and binary pwd=#{pwd}
+		
+	</select>
+
+	<!-- binary：为了区分大小写 -->
+	<select id="getUserByName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from app where
+		name
+		like binary #{name}
+	</select>
+	<select id="getUserByEmail" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from app where
+		email like binary #{email}
+	</select>
+
+
+
+
+
+	<!-- 以下为 mybatis-generator 自动生成 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from app
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from app
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="qp.model.User">
+		insert into app (id, name,
+		pwd,
+		email, province, city
+		)
+		values (#{id,jdbcType=INTEGER},
+		#{name,jdbcType=VARCHAR},
+		#{pwd,jdbcType=VARCHAR},
+		#{email,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR},
+		#{city,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="qp.model.User">
+		insert into app
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="pwd != null">
+				pwd,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="province != null">
+				province,
+			</if>
+			<if test="city != null">
+				city,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="pwd != null">
+				#{pwd,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="province != null">
+				#{province,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				#{city,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="qp.model.User">
+		update app
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="pwd != null">
+				pwd = #{pwd,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="province != null">
+				province = #{province,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				city = #{city,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="qp.model.User">
+		update app
+		set name
+		= #{name,jdbcType=VARCHAR},
+		pwd = #{pwd,jdbcType=VARCHAR},
+		email =
+		#{email,jdbcType=VARCHAR},
+		province = #{province,jdbcType=VARCHAR},
+		city = #{city,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>
